@@ -1,0 +1,36 @@
+using UnityEngine;
+using System.Collections;
+
+public class MarriageEvent
+{
+	public string Date = "";
+	public int BridePersonIndex = 0;
+	public int GroompersonIndex = 0;
+	public int Generation = 0;
+
+	public enum MarriageEventType
+	{
+		Null
+	}
+	public MarriageEvent(MarriageEventType type) : this("", 0, 0)
+	{ 
+	
+	}
+
+	public MarriageEvent(string date, int bridePersonIndex, int groomPersonIndex)
+	{
+		var myscript = GameObject.Find("Myscript").GetComponent<Myscript>();
+		Date = date;
+		BridePersonIndex = bridePersonIndex;
+		GroompersonIndex = groomPersonIndex;
+		Generation = myscript.myMatchMaker.allFamilies[myscript.myPeople.allPeople[groomPersonIndex].BirthFamilyIndex].Generation + 1;
+	}
+
+	public string GetText()
+	{
+		string retString = BridePersonIndex + " and " + GroompersonIndex + ", Married on " + Date;
+		return retString;
+	}
+
+}
+

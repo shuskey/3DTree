@@ -1,0 +1,109 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MyPeople
+{
+	public List<Person> allPeople;
+	
+	public MyPeople()
+	{
+		allPeople = new List<Person>();
+	}
+	
+	public void Add(Person newPerson)
+	{
+
+			allPeople.Add(newPerson);
+		
+	}
+	public class mortalityBracket
+	{
+		public int upToAge;
+		// rates per 100000
+	 	public int maleDeathRate;
+		public int femaleDeathRate;
+
+		public mortalityBracket (int UpToAge, int MaleDeathRate, int FemaleDeathRate)
+		{
+			upToAge = UpToAge;
+			maleDeathRate = MaleDeathRate;
+			femaleDeathRate = FemaleDeathRate;
+		}
+	}
+	
+	public void mortality(int currentYear)
+	{
+		var myscript = GameObject.Find("Myscript").GetComponent<Myscript>();
+		// Based off of US census Data year 2000
+		// U.S. Census Bureau, Statistical Abstract of the United States: 2012
+		//https://www.census.gov/compendia/statab/2012/tables/12s0110.pdf
+		// Up to age
+		mortalityBracket[] mortalityBracketList = new mortalityBracket[5] { 
+			new mortalityBracket(130, 17501, 14719),
+			new mortalityBracket(84, 4977, 3368),
+			new mortalityBracket(64, 676, 409),
+			new mortalityBracket(34, 77,38),
+			new mortalityBracket(1, 807, 663)};
+
+		//int[] mortalityAges = new int[5] {1, 34, 64, 84, 130};
+
+		//int[] mortalityRatesMale = new int[5] {807, 77, 676, 4977, 17501};
+		//int[] mortalityRatesFemale = new int[5] {663, 38, 409, 3368, 14719};
+
+		foreach (Person person in allPeople)
+		{
+			if (person.isAlive())
+			{
+				int age = person.age(currentYear);
+
+				#region Determine Mortality Rate
+				int mortalityRate=100000;  // 100%
+				foreach (mortalityBracket mortalityParameter in mortalityBracketList)
+				{
+					if (age <= mortalityParameter.upToAge)
+					{
+						if (person.Sex == Person.PersonSex.Female)
+						{
+							mortalityRate = mortalityParameter.femaleDeathRate;
+						} 
+						else 
+						{
+							mortalityRate = mortalityParameter.maleDeathRate;
+						}
+					}
+				}
+				#endregion
+				if (person.isDeathEvent(mortalityRate, currentYear))
+				{
+					person.Death = currentYear.ToString();
+					myscript.myMatchMaker.removeFromSinglesList(allPeople.IndexOf(person), person.Sex);
+				}
+
+			}
+
+		}
+
+	}
+
+	public int livingCount()
+	{
+		int retCount = 0;
+		foreach (Person person in allPeople)
+		{
+			if (person.isAlive()) retCount++;
+		}
+		return retCount;
+	}
+
+	public int addToAllPeople(Person person)
+	{
+		allPeople.Add (person);
+		return allPeople.IndexOf(person);
+	}
+	
+
+}
+
+
