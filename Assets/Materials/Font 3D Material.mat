@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Font 3D Material
-  m_Shader: {fileID: 4800000, guid: 2a670996c06bd43aebe18833b56d407d, type: 3}
+  m_Shader: {fileID: 4800000, guid: 9aa62e13038b84649b38142cabd952bb, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: 3000
@@ -19,7 +19,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 5f3e0158421a6ea44b12ddee6a52bd7d, type: 3}
+          m_Texture: {fileID: 2800000, guid: 50f8f52845f064ab38a07a60c8d2d7bf, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -135,4 +135,4 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 0, g: 0, b: 0, a: 0.953}
+        second: {r: 1, g: 1, b: 1, a: 0.953}
