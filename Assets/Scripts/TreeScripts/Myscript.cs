@@ -250,6 +250,7 @@ public class Myscript : MonoBehaviour
 
                     myTreePerson = myPeople.allPeople[tempPersonIndex];
                     //myTreePerson.TransporterObject = myTransporterObject;
+                    myTreePerson.treePersonIndex = tempPersonIndex;  // Just incase you do not already know
                     myTreePerson.FamilyPersonIndex = familyPersonIndex;
                     myTreePerson.Generation = generation;
                     myTreePerson.FamilyGenerationIndex = familyGenerationIndex;

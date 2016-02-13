@@ -4,7 +4,7 @@ using System.Collections;
 
 public class HousePlatformScript : MonoBehaviour {
     public GameObject MyPlatform;
-    public int MyFamilyIndex;
+    [SerializeField] int MyFamilyIndex;
     public float StartYear = 0.0f;
     public float EndYear = 0.0f;
     public int NumberOfPeople = 2;

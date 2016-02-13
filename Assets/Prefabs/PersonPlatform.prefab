@@ -39,7 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc038a783d6a1784bb52baa04f2abf29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyPlatform: {fileID: 123584, guid: 1ec3267986c7d4640a21544b6408e67d, type: 2}
+  MyPlatform: {fileID: 113330, guid: 4653e6847f33fe5409607860166fe342, type: 2}
   MyPlatformType: 0
   MyDestinationGameObject: {fileID: 0}
   MyTransporterGameObject: {fileID: 0}
@@ -48,6 +48,7 @@ MonoBehaviour:
   Marriage: 0
   Name: Scott David Huskey
   Sex: 1
+  treePersonIndex: 0
   BoyMaterial: {fileID: 2100000, guid: 399deb7251d274550b0bbce91010b689, type: 2}
   GirlMaterial: {fileID: 2100000, guid: 3ffa12463eb994f7fb652c8849a4df4f, type: 2}
   Generation: 0
@@ -73,7 +74,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: MyPlatform
       value: 
-      objectReference: {fileID: 123584, guid: 1ec3267986c7d4640a21544b6408e67d, type: 2}
+      objectReference: {fileID: 113330, guid: 4653e6847f33fe5409607860166fe342, type: 2}
     - target: {fileID: 0}
       propertyPath: InterPersonSpacing
       value: 0.5

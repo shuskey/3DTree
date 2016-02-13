@@ -14,6 +14,7 @@ public class PersonPlatformScript : MonoBehaviour
     public float Marriage = 0.0f;
     public string Name = "";
     public TreePerson.PersonSex Sex = TreePerson.PersonSex.NotSet;
+    public int treePersonIndex;
 
     public Material BoyMaterial;
     public Material GirlMaterial;
@@ -43,6 +44,7 @@ public class PersonPlatformScript : MonoBehaviour
 
     void myInit(TreePerson myTreePerson)
     {
+        treePersonIndex = myTreePerson.treePersonIndex;
         Birth = HELPER_DateToInt(myTreePerson.Birth);
         Death = HELPER_DateToInt(myTreePerson.Death);
         if (Death < 1.0f) Death = DateTime.Today.Year;

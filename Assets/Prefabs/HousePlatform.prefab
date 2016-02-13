@@ -39,7 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ef95875a03f4cc4ab4e7825bdb0a0e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyPlatform: {fileID: 156018, guid: 70874a4c9d64fc14c8b88fe9f620fbe4, type: 2}
+  MyPlatform: {fileID: 158730, guid: cf0dc4fd8241e254c884c2baa9dab99b, type: 2}
   MyFamilyIndex: 0
   StartYear: 0
   EndYear: 0
@@ -75,7 +75,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: MyPlatform
       value: 
-      objectReference: {fileID: 156018, guid: 70874a4c9d64fc14c8b88fe9f620fbe4, type: 2}
+      objectReference: {fileID: 158730, guid: cf0dc4fd8241e254c884c2baa9dab99b, type: 2}
     - target: {fileID: 0}
       propertyPath: PersonWidth
       value: 5

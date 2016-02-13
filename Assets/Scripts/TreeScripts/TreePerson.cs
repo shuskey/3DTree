@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 public class TreePerson
 {
+    public int treePersonIndex;
 	public string Name = "";
 	public PersonSex Sex = PersonSex.NotSet;
 	public string Birth = "";
@@ -156,9 +157,9 @@ public class TreePerson
 	}
 	public string ageText(int currentYear)
 	{
-		int ibirth;
 		string age = "No Birth Year";
-		if (int.TryParse(this.Birth, out ibirth))
+        int ibirth = HELPER_DateToInt(this.Birth);
+        if (ibirth != 0)
 		{
 			age = (currentYear - ibirth).ToString();
 		}
@@ -167,12 +168,11 @@ public class TreePerson
 
 	public int age(int currentYear)
 	{
-		int ibirth;
 		int age = 0;
-		if (int.TryParse(this.Birth, out ibirth))
-		{
-			age = currentYear - ibirth;
-		}
+	    int ibirth = HELPER_DateToInt(this.Birth);
+		
+		age = currentYear - ibirth;
+		
 		return age;
 	}
 	public bool isMarried()
@@ -208,6 +208,7 @@ public class TreePerson
         {
             DateTime convertedDate = DateTime.Parse(this.Birth);
             ibirth = convertedDate.Year;
+            
         }
         catch (FormatException)
         {
@@ -248,14 +249,41 @@ public class TreePerson
 	{
 		string age = this.ageText(currentYear);
 
-		string retString = "Name=" + this.Name + "(" + personIndex + "), Sex=" + this.GetSex() + ", Birth=" + this.Birth + ", Death=" + 
+		string retString = "Name=" + this.Name + "(" + personIndex + "), Sex=" + this.GetSex() + "\nBirth=" + this.Birth + "\nDeath=" + 
 			(this.Death=="" ? ("Living, Age=" + age) : (this.Death + " age at death=" + ageAtDeath())) + "\n";
+	    retString += "\nAge right now = " + age;
 		foreach (FamilyEvent chkEvent in myEvents)
 		{
-			retString += chkEvent.GetText() + "\n";
+			retString += "\n" + chkEvent.GetText();
 		}	
 		return retString;
 	}
+
+    #region HELPERS
+
+    public int HELPER_DateToInt(string myStringDate)
+    {
+        int IntDate = 0;
+
+        // Special handling for if this starts as a Year Only, example "1869"
+        if (!Int32.TryParse(myStringDate, out IntDate))
+        {
+            //That Parse did not work, so lets convert the full date format like "January 1869" or "21 January 1869"
+            try
+            {
+                DateTime convertedDate = DateTime.Parse(myStringDate);
+                IntDate = convertedDate.Year;
+            }
+            catch (FormatException)
+            {
+                Debug.Log(string.Format("Unable to Parse this Date: '{0}'.", myStringDate));
+            }
+        }
+
+        return IntDate;
+    }
+
+    #endregion
 
 }
 
