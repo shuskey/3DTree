@@ -42,12 +42,12 @@ public class Myscript : MonoBehaviour
         int lastYear = DateTime.Today.Year;
         myMatchMaker = new Matchmaker();
         myPeople = new MyPeople();
-        _personsBirthPlatformObjects = new GameObject[100];
-        _personsWeddingPlatformObjects = new GameObject[100];
+        _personsBirthPlatformObjects = new GameObject[1000];
+        _personsWeddingPlatformObjects = new GameObject[1000];
 
-        _weddingDayDestinationObjects = new GameObject[100];
+        _weddingDayDestinationObjects = new GameObject[1000];
 
-        _birthDayDestinationObjects = new GameObject[100];
+        _birthDayDestinationObjects = new GameObject[1000];
 
         // _personPrefab = Resources.Load("FirstPerson");
 

@@ -323,48 +323,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 961b9c116a0ab924f92702dd50898555, type: 2}
   m_IsPrefabParent: 0
---- !u!1001 &175653318
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 448360, guid: 4653e6847f33fe5409607860166fe342, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 448360, guid: 4653e6847f33fe5409607860166fe342, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 448360, guid: 4653e6847f33fe5409607860166fe342, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 448360, guid: 4653e6847f33fe5409607860166fe342, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 448360, guid: 4653e6847f33fe5409607860166fe342, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 448360, guid: 4653e6847f33fe5409607860166fe342, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 448360, guid: 4653e6847f33fe5409607860166fe342, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 448360, guid: 4653e6847f33fe5409607860166fe342, type: 2}
-      propertyPath: m_RootOrder
-      value: 16
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 4653e6847f33fe5409607860166fe342, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1001 &255825637
 Prefab:
   m_ObjectHideFlags: 0
@@ -986,7 +944,7 @@ Prefab:
     - target: {fileID: 4500000, guid: ac79453cdfd497e4fb70bd15a2766204, type: 2}
       propertyPath: m_CustomSkybox
       value: 
-      objectReference: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+      objectReference: {fileID: 2100000, guid: da976b1a4f7ebb949b0f71341e4f1821, type: 2}
     - target: {fileID: 4500000, guid: ac79453cdfd497e4fb70bd15a2766204, type: 2}
       propertyPath: m_Enabled
       value: 1
@@ -1006,6 +964,22 @@ Prefab:
     - target: {fileID: 2000000, guid: ac79453cdfd497e4fb70bd15a2766204, type: 2}
       propertyPath: far clip plane
       value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000000, guid: ac79453cdfd497e4fb70bd15a2766204, type: 2}
+      propertyPath: m_BackGroundColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000000, guid: ac79453cdfd497e4fb70bd15a2766204, type: 2}
+      propertyPath: m_BackGroundColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000000, guid: ac79453cdfd497e4fb70bd15a2766204, type: 2}
+      propertyPath: m_BackGroundColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: ac79453cdfd497e4fb70bd15a2766204, type: 2}
+      propertyPath: mouseFreelook
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ac79453cdfd497e4fb70bd15a2766204, type: 2}
@@ -1551,7 +1525,7 @@ MonoBehaviour:
   MyHousePlatformObject: {fileID: 170692, guid: 6ebc18242beef83479da8098760821d2,
     type: 2}
   MyTransporterObject: {fileID: 182658, guid: e2e629dee514d7b4c950113180dceeae, type: 2}
-  ThreeDFamilyTreeFileName: C:\Users\scott.huskey\Documents\Me\3DFT\fivefamily.xml
+  ThreeDFamilyTreeFileName: C:\Users\scott.huskey\Documents\Me\3DFT\3DTree_Sim_F204_P809.xml
   currentYear: 0
   BrideColor: {r: 0.855, g: 0.439, b: 0.839, a: 1}
   GroomColor: {r: 0.118, g: 0.565, b: 1, a: 1}

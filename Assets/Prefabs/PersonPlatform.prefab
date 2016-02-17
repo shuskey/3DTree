@@ -39,7 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc038a783d6a1784bb52baa04f2abf29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyPlatform: {fileID: 113330, guid: 4653e6847f33fe5409607860166fe342, type: 2}
+  MyPlatform: {fileID: 132708, guid: d56ef3bc3e63fd84da2fd928f951b67f, type: 2}
   MyPlatformType: 0
   MyDestinationGameObject: {fileID: 0}
   MyTransporterGameObject: {fileID: 0}
@@ -74,7 +74,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: MyPlatform
       value: 
-      objectReference: {fileID: 113330, guid: 4653e6847f33fe5409607860166fe342, type: 2}
+      objectReference: {fileID: 132708, guid: d56ef3bc3e63fd84da2fd928f951b67f, type: 2}
     - target: {fileID: 0}
       propertyPath: InterPersonSpacing
       value: 0.5

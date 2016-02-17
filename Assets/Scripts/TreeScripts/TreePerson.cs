@@ -203,28 +203,36 @@ public class TreePerson
 		int ibirth = 0;
 		int ideath = 0;
 		int retAgeAtDeath = 0;
+        
+        // Special handling for if this starts as a Year Only, example "1869"
+	    if (!Int32.TryParse(this.Birth, out ibirth))
+	    {
+	        try
+	        {
+	            DateTime convertedDate = DateTime.Parse(this.Birth);
+	            ibirth = convertedDate.Year;
 
-        try
-        {
-            DateTime convertedDate = DateTime.Parse(this.Birth);
-            ibirth = convertedDate.Year;
-            
-        }
-        catch (FormatException)
-        {
-            Debug.Log(string.Format("Unable to Parse this Birth Date: '{0}'.", this.Birth));
-        }
-        try
-        {
-            DateTime convertedDate = DateTime.Parse(this.Death);
-            ideath = convertedDate.Year;
-        }
-        catch (FormatException)
-        {
-            Debug.Log(string.Format("Unable to Parse this Death Date: '{0}'.", this.Death));
-        }
+	        }
+	        catch (FormatException)
+	        {
+	            Debug.Log(string.Format("Unable to Parse this Birth Date: '{0}'.", this.Birth));
+	        }
+	    }
+        // Special handling for if this starts as a Year Only, example "1869"
+	    if (!Int32.TryParse(this.Death, out ideath))
+	    {
+	        try
+	        {
+	            DateTime convertedDate = DateTime.Parse(this.Death);
+	            ideath = convertedDate.Year;
+	        }
+	        catch (FormatException)
+	        {
+	            Debug.Log(string.Format("Unable to Parse this Death Date: '{0}'.", this.Death));
+	        }
+	    }
 
-		retAgeAtDeath = ideath - ibirth;
+	    retAgeAtDeath = ideath - ibirth;
 
 		return retAgeAtDeath;
 	}
