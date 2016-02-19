@@ -64,7 +64,9 @@ public class HousePlatformScript : MonoBehaviour {
                     if (mySpouse.Death == "")
                     {
                         // Not Dead
+                        //allow for future time travel
                         personTimeSpans[p].End = currentYear; // I am ALIVE, and not married
+
                     }
                     else
                     {

@@ -15,7 +15,6 @@ public class Myscript : MonoBehaviour
     public UnityEngine.Object MyHousePlatformObject;
     public UnityEngine.Object MyTransporterObject;
     public string ThreeDFamilyTreeFileName = ""; // if Null or empty use Adam and Eve, otherwise read from this file
-    public int currentYear = 0;
     public Matchmaker myMatchMaker;
     public MyPeople myPeople;
     public CourtHouse MyCourtHouse;
@@ -39,7 +38,6 @@ public class Myscript : MonoBehaviour
     private void Awake()
     {
         Debug.Log("Awake");
-        int lastYear = DateTime.Today.Year;
         myMatchMaker = new Matchmaker();
         myPeople = new MyPeople();
         _personsBirthPlatformObjects = new GameObject[1000];
@@ -50,52 +48,6 @@ public class Myscript : MonoBehaviour
         _birthDayDestinationObjects = new GameObject[1000];
 
         // _personPrefab = Resources.Load("FirstPerson");
-
-        #region MatchMaker
-
-        if (string.IsNullOrEmpty(ThreeDFamilyTreeFileName))
-        {
-            lastYear = 0;
-            currentYear = 0;
-
-            TreePerson Adam = new TreePerson(TreePerson.PersonType.Adam, currentYear.ToString());
-            TreePerson Eve = new TreePerson(TreePerson.PersonType.Eve, currentYear.ToString());
-            var personAIndex = myPeople.addToAllPeople(Adam);
-            var personEIndex = myPeople.addToAllPeople(Eve);
-            myMatchMaker.addToSinglesList(personAIndex, Adam.Sex);
-            myMatchMaker.addToSinglesList(personEIndex, Eve.Sex);
-
-            //Debug.Log ("Hello " + Adam.Name + " and " + Eve.Name + " !");
-            //Debug.Log (Adam.GetSex() + " and " + Eve.GetSex());
-
-            /// TODO
-            /// implement the House cluster Display List Data type
-            /// Draw a sample Cluster
-            /// put in Marriage portals
-            /// put in tomb stones
-            /// add in Divorce and side winds
-            /// 
-            for (currentYear = 0; currentYear < 200; currentYear++)
-            {
-
-                Debug.Log("Happy New Year!!.  It is year: " + currentYear.ToString());
-                Debug.Log("We have " + myMatchMaker.BachelorPersonIndexList.Count + " Bachelors, and " +
-                          myMatchMaker.BachelorettePersonIndexList.Count + " Bachelorettes");
-                Debug.Log("Our people count is " + myPeople.allPeople.Count + ", with alive count =" +
-                          myPeople.livingCount());
-                Debug.Log("We have " + myMatchMaker.allFamilies.Count + " Families <-----------------------");
-
-                myMatchMaker.doWeddings(currentYear);
-                myMatchMaker.beFruitfullAndMultiply(currentYear);
-                myPeople.mortality(currentYear);
-
-                lastYear = currentYear;
-            }
-            Debug.Log("We are done with populating the earth!");
-            myMatchMaker.displayAllFamilies(lastYear);
-        }
-
-        #endregion
 
     }
 
@@ -127,7 +79,6 @@ public class Myscript : MonoBehaviour
 
         {
             Debug.Log("Using CourtHouse");
-            currentYear = DateTime.Today.Year;
             MyCourtHouse = new CourtHouse();
 
             // Construct an instance of the XmlSerializer with the type
