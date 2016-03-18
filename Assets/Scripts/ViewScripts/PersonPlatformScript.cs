@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using Assets.Scripts.TreeScripts;
 
 public class PersonPlatformScript : MonoBehaviour
 {
@@ -23,12 +24,8 @@ public class PersonPlatformScript : MonoBehaviour
     public int FamilyGenerationIndex = 0;  // For this generation, is this the first, second, or nth family
     public int FamilyPersonIndex = 0; // for this person, are they the First, second, of nth in the family
 
-    public float PersonWidth = 2.0f;
-    public float InterPersonSpacing = 0.5f;
     public float PreviousHouseEdge = 0.0f;
-    public float InterHouseSpacing = 5.0f;
-    public float ZDivider = 2.0f;
-    public float GenerationGap = 20.0f;
+    private ScriptScale _myScriptScale = new ScriptScale();
 
     private Renderer[] childrenRenderers;
     private Transform[] childrenTransforms;
@@ -40,6 +37,11 @@ public class PersonPlatformScript : MonoBehaviour
         None,
         Birth,
         Wedding
+    }
+
+    void myInitScale(ScriptScale myScaleScript)
+    {
+        _myScriptScale = myScaleScript;
     }
 
     void myInit(TreePerson myTreePerson)
@@ -88,33 +90,33 @@ public class PersonPlatformScript : MonoBehaviour
         {
             Debug.Log("A person is alive!");
 
-            float zscale = (Death - Birth)/ZDivider;
-            float xscale = PersonWidth;
+            float zscale = (Death - Birth) * _myScriptScale.ZScale;
+            float xscale = _myScriptScale.PersonWidth;
 
-            float y = (Generation-1)*GenerationGap;
-            float x = PreviousHouseEdge + InterHouseSpacing;
+            float y = (Generation-1)* _myScriptScale.GenerationGap;
+            float x = PreviousHouseEdge + _myScriptScale.InterHouseSpacing;
 
             //GameObject newChild = GameObject.CreatePrimitive(PrimitiveType.Cube);
             GameObject newPlatform =
                 (GameObject) Instantiate(MyPlatform, new Vector3(0.0f, 0.0f, 0.0f), transform.rotation);
 
             newPlatform.transform.parent = this.transform;
-            newPlatform.transform.localPosition = new Vector3(x + ((xscale + InterPersonSpacing) * FamilyPersonIndex), y, Birth / ZDivider);
+            newPlatform.transform.localPosition = new Vector3(x + ((xscale + _myScriptScale.InterPersonSpacing) * FamilyPersonIndex), y, Birth * _myScriptScale.ZScale);
 
             if (MyDestinationGameObject != null) MyDestinationGameObject.transform.parent = this.transform;
             if (MyTransporterGameObject != null) MyTransporterGameObject.transform.parent = this.transform;
 
             if (MyPlatformType == PlatformType.Birth)   //We have a Transporter located at the Wedding Day and a Destination located at the Birthday
             {  // note: these link two different Person Platforms
-                if (MyDestinationGameObject != null) MyDestinationGameObject.transform.localPosition = new Vector3(x + xscale/ 2.0f + ((xscale + InterPersonSpacing) * FamilyPersonIndex), y, (Birth + 0.5f) / ZDivider);
-                if (MyTransporterGameObject != null) MyTransporterGameObject.transform.localPosition = new Vector3(x + xscale / 2.0f + ((xscale + InterPersonSpacing) * FamilyPersonIndex), y, Marriage / ZDivider);
+                if (MyDestinationGameObject != null) MyDestinationGameObject.transform.localPosition = new Vector3(x + xscale/ 2.0f + ((xscale + _myScriptScale.InterPersonSpacing) * FamilyPersonIndex), y, (Birth + 0.5f) * _myScriptScale.ZScale);
+                if (MyTransporterGameObject != null) MyTransporterGameObject.transform.localPosition = new Vector3(x + xscale / 2.0f + ((xscale + _myScriptScale.InterPersonSpacing) * FamilyPersonIndex), y, Marriage * _myScriptScale.ZScale);
 
             }
 
             if (MyPlatformType == PlatformType.Wedding)  //We have a Transporter located at the Birthday and a Destination located at the Wedding Day
             {  // note: these link two different Person Platforms
-                if (MyDestinationGameObject != null) MyDestinationGameObject.transform.localPosition = new Vector3(x + xscale / 2.0f + ((xscale + InterPersonSpacing) * FamilyPersonIndex), y, Marriage / ZDivider);
-                if (MyTransporterGameObject != null) MyTransporterGameObject.transform.localPosition = new Vector3(x + xscale / 2.0f + ((xscale + InterPersonSpacing) * FamilyPersonIndex), y, (Birth + 0.5f) / ZDivider);
+                if (MyDestinationGameObject != null) MyDestinationGameObject.transform.localPosition = new Vector3(x + xscale / 2.0f + ((xscale + _myScriptScale.InterPersonSpacing) * FamilyPersonIndex), y, Marriage * _myScriptScale.ZScale);
+                if (MyTransporterGameObject != null) MyTransporterGameObject.transform.localPosition = new Vector3(x + xscale / 2.0f + ((xscale + _myScriptScale.InterPersonSpacing) * FamilyPersonIndex), y, (Birth + 0.5f) * _myScriptScale.ZScale);
             }
 
             childrenTransforms = GetComponentsInChildren<Transform>();

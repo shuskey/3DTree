@@ -39,7 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc038a783d6a1784bb52baa04f2abf29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyPlatform: {fileID: 132708, guid: d56ef3bc3e63fd84da2fd928f951b67f, type: 2}
+  MyPlatform: {fileID: 161464, guid: d5335e2e8842ec34d9f87d2f26c6741f, type: 2}
   MyPlatformType: 0
   MyDestinationGameObject: {fileID: 0}
   MyTransporterGameObject: {fileID: 0}
@@ -54,12 +54,7 @@ MonoBehaviour:
   Generation: 0
   FamilyGenerationIndex: 0
   FamilyPersonIndex: 0
-  PersonWidth: 5
-  InterPersonSpacing: 0.5
   PreviousHouseEdge: 0
-  InterHouseSpacing: 5
-  ZDivider: 1
-  GenerationGap: 20
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -74,22 +69,26 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: MyPlatform
       value: 
-      objectReference: {fileID: 132708, guid: d56ef3bc3e63fd84da2fd928f951b67f, type: 2}
+      objectReference: {fileID: 161464, guid: d5335e2e8842ec34d9f87d2f26c6741f, type: 2}
     - target: {fileID: 0}
       propertyPath: InterPersonSpacing
-      value: 0.5
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: PersonWidth
-      value: 5
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: ZDivider
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: InterHouseSpacing
-      value: 5
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: GenerationGap
+      value: 200
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using Assets.Scripts.TreeScripts;
 
 public class HousePlatformScript : MonoBehaviour {
     public GameObject MyPlatform;
@@ -12,12 +13,10 @@ public class HousePlatformScript : MonoBehaviour {
     public int Generation = 0;      //what generation is this birth family
     public int FamilyGenerationIndex = 0;  // For this generation, is this the first, second, or nth family
 
-    public float PersonWidth = 2.0f;
-    public float InterPersonSpacing = 1.0f;
     public float PreviousHouseEdge = 0.0f;
-    public float InterHouseSpacing = 5.0f;
-    public float ZDivider = 2.0f;
-    public float GenerationGap = 20.0f;
+
+    private ScriptScale _myScriptScale = new ScriptScale();
+
 
     private Renderer[] childrenRenderers;
     private Transform[] childrenTransforms;
@@ -25,6 +24,11 @@ public class HousePlatformScript : MonoBehaviour {
     private Renderer BackBoard;
     private Renderer TextPanel;
 
+
+    void myInitScale(ScriptScale myScaleScript)
+    {
+        _myScriptScale = myScaleScript;
+    }
 
     private void myInit(Family myFamily)
     {
@@ -125,17 +129,19 @@ public class HousePlatformScript : MonoBehaviour {
             EndYear = endDate;
 
             float zscale = (float) (endDate - StartYear);
-            float xscale = (float) peopleCount*(PersonWidth+InterPersonSpacing);
+            float xscale = (float) peopleCount*(_myScriptScale.PersonWidth+ _myScriptScale.InterPersonSpacing);
 
-            float y = ((Generation-1)*GenerationGap) - 0.01f;
-            float x = PreviousHouseEdge + InterHouseSpacing;
+            float xscaleFrontDoor = (float) 2.0f*(_myScriptScale.PersonWidth) + _myScriptScale.InterPersonSpacing;
+
+            float y = ((Generation-1) * _myScriptScale.GenerationGap) - 0.01f;
+            float x = PreviousHouseEdge + _myScriptScale.InterHouseSpacing;
             float z = StartYear;
 
             // Mark the corners
-            HELPER_MarkThisPoint("LeftEdgeStart", x, y, z/ZDivider);
-            HELPER_MarkThisPoint("LeftEdgeEnd", x, y, (z + zscale)/ZDivider);
-            HELPER_MarkThisPoint("RightEdgeStart", x + xscale, y, (z)/ZDivider);
-            HELPER_MarkThisPoint("RightEdgeEnd", x + xscale, y, (z + zscale)/ZDivider);
+            HELPER_MarkThisPoint("LeftEdgeStart", x, y, z * _myScriptScale.ZScale);
+            HELPER_MarkThisPoint("LeftEdgeEnd", x, y, (z + zscale) * _myScriptScale.ZScale);
+            HELPER_MarkThisPoint("RightEdgeStart", x + xscale, y, (z) * _myScriptScale.ZScale);
+            HELPER_MarkThisPoint("RightEdgeEnd", x + xscale, y, (z + zscale) * _myScriptScale.ZScale);
 
 
             //GameObject newHouse = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -143,7 +149,7 @@ public class HousePlatformScript : MonoBehaviour {
                 (GameObject) Instantiate(MyPlatform, new Vector3(0.0f, 0.0f, 0.0f), transform.rotation);
 
             newHouse.transform.parent = this.transform;
-            newHouse.transform.position = new Vector3(x, y, z / ZDivider);
+            newHouse.transform.position = new Vector3(x, y, z * _myScriptScale.ZScale);
 
             childrenTransforms = GetComponentsInChildren<Transform>();
             //ZTransformBackBoard = childrenTransforms[8];
@@ -152,12 +158,12 @@ public class HousePlatformScript : MonoBehaviour {
             {
                 if (childTransform.name.Contains("TransformBackBoard"))
                 {
-                    childTransform.transform.localScale = new Vector3(xscale, 1.0f, zscale/ZDivider);
+                    childTransform.transform.localScale = new Vector3(xscale, 1.0f, zscale * _myScriptScale.ZScale);
                 }
-                if (childTransform.name.Contains("TransformFamilyName"))
+                if (childTransform.name.Contains("ROT TRANSFORM SIGN"))
                 {
 
-                    childTransform.transform.localScale = new Vector3(1.0f,1.0f, 2.0f);
+                    //childTransform.transform.localScale = new Vector3(xscaleFrontDoor,xscaleFrontDoor, 1.0f);
                 }
 
             }

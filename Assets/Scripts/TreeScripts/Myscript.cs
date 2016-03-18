@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
+using Assets.Scripts.TreeScripts;
 using UnityEngine;
 
 public class Myscript : MonoBehaviour
@@ -15,6 +16,15 @@ public class Myscript : MonoBehaviour
     public UnityEngine.Object MyHousePlatformObject;
     public UnityEngine.Object MyTransporterObject;
     public string ThreeDFamilyTreeFileName = ""; // if Null or empty use Adam and Eve, otherwise read from this file
+
+    //this sets up the over all scaling of our world
+    public float PersonWidth = 50.0f;  // The width of a person platform
+    public float InterPersonSpacing = 5.0f;  // The spacing between person platforms
+    public float InterHouseSpacing = 20.0f;  // The spacing between Houses
+    public float ZScale = 2.0f;  // Number of meters per year
+    public float GenerationGap = 200.0f;   // Y axis offset for each generation
+
+    private ScriptScale myScriptScale;
     public Matchmaker myMatchMaker;
     public MyPeople myPeople;
     public CourtHouse MyCourtHouse;
@@ -24,12 +34,16 @@ public class Myscript : MonoBehaviour
     public Color BoyColor = new Color(0.392f, 0.584f, 0.929f);
     public Color BlankColor = new Color(.467f, 0.533f, 0.600f);
 
+
     private GameObject[] _personsBirthPlatformObjects;
     private GameObject[] _personsWeddingPlatformObjects;
     private GameObject[] _weddingDayDestinationObjects;
     private GameObject[] _birthDayDestinationObjects;
 
     private Transform[] _childrenTransforms;
+
+    private GUIManager gui;
+
 
     //public MySecondScript secondScriptqqqqqqwe;
 
@@ -38,6 +52,18 @@ public class Myscript : MonoBehaviour
     private void Awake()
     {
         Debug.Log("Awake");
+        myScriptScale = new ScriptScale();
+        myScriptScale.PersonWidth = PersonWidth;
+        myScriptScale.InterPersonSpacing = InterPersonSpacing;
+        myScriptScale.InterHouseSpacing = InterHouseSpacing;
+        myScriptScale.GenerationGap = GenerationGap;
+        myScriptScale.ZScale = ZScale;
+
+        // Let the GUI Manager know about our ZScale
+        gui = FindObjectOfType(typeof(GUIManager)) as GUIManager;
+        gui.SendMessage("myInitZScale", ZScale);
+
+
         myMatchMaker = new Matchmaker();
         myPeople = new MyPeople();
         _personsBirthPlatformObjects = new GameObject[1000];
@@ -56,6 +82,8 @@ public class Myscript : MonoBehaviour
     {
         Debug.Log("I just started!");
         //secondScript.SortMyList();
+
+
 
         // TODO turn this (below) into a LIST
         int[] counterPerGeneration = new int[25];
@@ -129,6 +157,8 @@ public class Myscript : MonoBehaviour
                 familyHome.FamilyName = parts[parts.Length - 1];
 
                 familyHome.NumberOfPeople = peopleCount;
+
+                newHousePlatform.SendMessage("myInitScale", myScriptScale);
 
                 newHousePlatform.SendMessage("myInit", familyHome);
 
@@ -206,6 +236,7 @@ public class Myscript : MonoBehaviour
                     myTreePerson.Generation = generation;
                     myTreePerson.FamilyGenerationIndex = familyGenerationIndex;
                     myTreePerson.PreviousHouseEdge = previousHouseEdge[generation];
+                    newPersonPlatform.SendMessage("myInitScale", myScriptScale);
                     newPersonPlatform.SendMessage("myInit", myTreePerson);
                     newPersonPlatform.SendMessage("myInitType", platformType);
                     newPersonPlatform.SendMessage("myInitDestinationObject", tmpDestinationObject);

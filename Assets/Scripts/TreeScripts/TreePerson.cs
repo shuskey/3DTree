@@ -257,9 +257,9 @@ public class TreePerson
 	{
 		string age = this.ageText(currentYear);
 
-		string retString = "Name=" + this.Name + "(" + personIndex + "), Sex=" + this.GetSex() + "\nBirth=" + this.Birth + "\nDeath=" + 
-			(this.Death=="" ? ("Living, Age=" + age) : (this.Death + " age at death=" + ageAtDeath())) + "\n";
-	    retString += "\nAge right now = " + age;
+		string retString = this.Name + " (Index " + personIndex + "), " + this.GetSex() + "\nBorn " + this.Birth + ", " +
+			(this.Death=="" ? ("Living, Age=" + age + "\n") : ("Died " + this.Death + "\n"));
+	    retString += "Age right now = " + age;
 		foreach (FamilyEvent chkEvent in myEvents)
 		{
 			retString += "\n" + chkEvent.GetText();
