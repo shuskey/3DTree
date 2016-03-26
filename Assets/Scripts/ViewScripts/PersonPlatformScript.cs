@@ -14,11 +14,17 @@ public class PersonPlatformScript : MonoBehaviour
     public float Death = 0.0f;
     public float Marriage = 0.0f;
     public string Name = "";
+    public string PortraitURI = "";
+    public Texture personPortrait;
     public TreePerson.PersonSex Sex = TreePerson.PersonSex.NotSet;
     public int treePersonIndex;
 
     public Material BoyMaterial;
     public Material GirlMaterial;
+
+    public Texture BoyTetTexture;
+    public Texture GirlTexture;
+
 
     public int Generation = 0;      //what generation is this birth family
     public int FamilyGenerationIndex = 0;  // For this generation, is this the first, second, or nth family
@@ -51,6 +57,7 @@ public class PersonPlatformScript : MonoBehaviour
         Death = HELPER_DateToInt(myTreePerson.Death);
         if (Death < 1.0f) Death = DateTime.Today.Year;
         Name = myTreePerson.Name;
+        PortraitURI = myTreePerson.PortraitURI;
         Sex = myTreePerson.Sex;
         Generation = myTreePerson.Generation;
         FamilyGenerationIndex = myTreePerson.FamilyGenerationIndex;
@@ -81,7 +88,7 @@ public class PersonPlatformScript : MonoBehaviour
     /// 
     /// </summary>
     // Use this for initialization
-    void Start () {
+    IEnumerator Start () {
         if (Birth < 1.0f)
         {
             Debug.Log(string.Format("This person '{0}' has a birth of 0", Name));
@@ -142,6 +149,31 @@ public class PersonPlatformScript : MonoBehaviour
                 if (childRender.name.Contains("TxtMyName"))
                 {
                     childRender.GetComponent<TextMesh>().text = Name;
+                }
+                if (childRender.name.Contains("PortraitScreen"))
+                {
+                    if (PortraitURI != "")
+                    {
+
+                        //  childRender.material.mainTexture = new Texture2D(4, 4, TextureFormat.DXT1, false);
+
+                        // Start a download of the given URL
+                        var www = new WWW(PortraitURI);
+
+                        // wait until the download is done
+                        yield return www;
+
+                        // assign the downloaded image to the main texture of the object
+                        personPortrait = childRender.material.mainTexture = www.texture;
+                        
+
+                    }
+                    else
+                    {
+                        personPortrait = childRender.material.mainTexture = ((Sex == TreePerson.PersonSex.Female)
+                            ? GirlTexture
+                            : BoyTetTexture);
+                    }
                 }
             }
         }

@@ -48,10 +48,10 @@ public class FamilyEvent
 		switch (EventType)
 		{
 		case FamilyEventType.Marriage:
-			retString = BridePersonIndex + " and " + GroompersonIndex + ", Married on " + Date;
+			retString = " Married on " + Date;
 			break;
 		case FamilyEventType.Divorce:
-			retString = BridePersonIndex + " and " + GroompersonIndex + ", Divorced on " + Date;
+			retString = " Divorced on " + Date;
 			break;
 		}
 	

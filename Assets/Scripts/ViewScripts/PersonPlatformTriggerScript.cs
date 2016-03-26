@@ -20,19 +20,18 @@ public class PersonPlatformTriggerScript : MonoBehaviour
         var myroot = this.transform.root;   // This will get us the PersonPlatform
         treePersonIndex = myroot.GetComponent<PersonPlatformScript>().treePersonIndex;
     }
-    
+
     private void OnTriggerEnter(Collider otherObject)
     {
         if (otherObject.tag == "Player")
         {
             if (gui)
             {
-
-   
+                var myroot = this.transform.root;   // This will get us the PersonPlatform                
+                gui.PersonPortrait = myroot.GetComponent<PersonPlatformScript>().personPortrait;
                 gui.treePersonIndex = treePersonIndex;
                 gui.showPersonInformation = true;
             }
-
         }
     }
 

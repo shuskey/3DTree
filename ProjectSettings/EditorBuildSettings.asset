@@ -7,3 +7,5 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 0
     path: Assets/Infinite Runner/Scenes/MainScene.unity
+  - enabled: 1
+    path: Assets/Scenes/3DTree with Family.unity

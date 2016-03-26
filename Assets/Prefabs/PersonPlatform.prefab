@@ -39,7 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc038a783d6a1784bb52baa04f2abf29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyPlatform: {fileID: 161464, guid: d5335e2e8842ec34d9f87d2f26c6741f, type: 2}
+  MyPlatform: {fileID: 106142, guid: 4a192b8d19c336548a8443f86f05a33f, type: 2}
   MyPlatformType: 0
   MyDestinationGameObject: {fileID: 0}
   MyTransporterGameObject: {fileID: 0}
@@ -47,10 +47,14 @@ MonoBehaviour:
   Death: 2016
   Marriage: 0
   Name: Scott David Huskey
+  PortraitURI: 
+  personPortrait: {fileID: 0}
   Sex: 1
   treePersonIndex: 0
   BoyMaterial: {fileID: 2100000, guid: 399deb7251d274550b0bbce91010b689, type: 2}
   GirlMaterial: {fileID: 2100000, guid: 3ffa12463eb994f7fb652c8849a4df4f, type: 2}
+  BoyTetTexture: {fileID: 2800000, guid: 70aa1192de5d49d449cdf3ec76102f15, type: 3}
+  GirlTexture: {fileID: 2800000, guid: b41265732c18c1748b2f9b43a3ae8442, type: 3}
   Generation: 0
   FamilyGenerationIndex: 0
   FamilyPersonIndex: 0
@@ -69,7 +73,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: MyPlatform
       value: 
-      objectReference: {fileID: 161464, guid: d5335e2e8842ec34d9f87d2f26c6741f, type: 2}
+      objectReference: {fileID: 106142, guid: 4a192b8d19c336548a8443f86f05a33f, type: 2}
     - target: {fileID: 0}
       propertyPath: InterPersonSpacing
       value: 5
@@ -90,6 +94,14 @@ Prefab:
       propertyPath: GenerationGap
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: BoyTetTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: 70aa1192de5d49d449cdf3ec76102f15, type: 3}
+    - target: {fileID: 0}
+      propertyPath: GirlTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: b41265732c18c1748b2f9b43a3ae8442, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 125638}

@@ -94,7 +94,12 @@ public class Myscript : MonoBehaviour
         TreePerson.timeSpan[] personTimeSpans = new TreePerson.timeSpan[25];
 
         #region MatchMaker
-
+        string[] arguments = Environment.GetCommandLineArgs();
+        if (arguments.Count() > 1)
+        {
+            ThreeDFamilyTreeFileName = arguments[1];
+        }
+        
         if (string.IsNullOrEmpty(ThreeDFamilyTreeFileName))
         {
             Debug.Log("Using MatchMaker");

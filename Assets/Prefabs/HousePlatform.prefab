@@ -39,7 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ef95875a03f4cc4ab4e7825bdb0a0e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyPlatform: {fileID: 187680, guid: a991f9a363ca15a4c944f7eff56a2d4e, type: 2}
+  MyPlatform: {fileID: 177884, guid: a991f9a363ca15a4c944f7eff56a2d4e, type: 2}
   MyFamilyIndex: 0
   StartYear: 0
   EndYear: 0
@@ -47,12 +47,7 @@ MonoBehaviour:
   FamilyName: Family Name Here
   Generation: 0
   FamilyGenerationIndex: 0
-  PersonWidth: 50
-  InterPersonSpacing: 5
   PreviousHouseEdge: 0
-  InterHouseSpacing: 20
-  ZDivider: 0.5
-  GenerationGap: 200
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -75,7 +70,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: MyPlatform
       value: 
-      objectReference: {fileID: 187680, guid: a991f9a363ca15a4c944f7eff56a2d4e, type: 2}
+      objectReference: {fileID: 177884, guid: a991f9a363ca15a4c944f7eff56a2d4e, type: 2}
     - target: {fileID: 0}
       propertyPath: PersonWidth
       value: 50
