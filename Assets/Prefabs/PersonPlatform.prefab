@@ -11,7 +11,7 @@ GameObject:
   - 114: {fileID: 11482842}
   m_Layer: 0
   m_Name: PersonPlatform
-  m_TagString: Untagged
+  m_TagString: PersonPlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,6 +102,14 @@ Prefab:
       propertyPath: GirlTexture
       value: 
       objectReference: {fileID: 2800000, guid: b41265732c18c1748b2f9b43a3ae8442, type: 3}
+    - target: {fileID: 0}
+      propertyPath: MyDestinationGameObject
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MyTransporterGameObject
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 125638}

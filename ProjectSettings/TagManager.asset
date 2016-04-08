@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Trigger Mat
+  - MovingPlatform
+  - Waypoint
+  - Pickup
+  - Enemy
+  - Coin
+  - PersonPlatform
   layers:
   - Default
   - TransparentFX

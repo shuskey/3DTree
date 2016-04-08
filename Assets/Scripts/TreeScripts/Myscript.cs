@@ -25,29 +25,19 @@ public class Myscript : MonoBehaviour
     public float GenerationGap = 200.0f;   // Y axis offset for each generation
 
     private ScriptScale myScriptScale;
-    public Matchmaker myMatchMaker;
     public MyPeople myPeople;
     public CourtHouse MyCourtHouse;
-    public Color BrideColor = new Color(0.855f, 0.439f, 0.839f);
-    public Color GroomColor = new Color(0.118f, 0.565f, 1.0f);
-    public Color GirlColor = new Color(0.847f, 0.749f, 0.847f);
-    public Color BoyColor = new Color(0.392f, 0.584f, 0.929f);
-    public Color BlankColor = new Color(.467f, 0.533f, 0.600f);
-
 
     private GameObject[] _personsBirthPlatformObjects;
     private GameObject[] _personsWeddingPlatformObjects;
     private GameObject[] _weddingDayDestinationObjects;
     private GameObject[] _birthDayDestinationObjects;
 
+    private Dictionary<int, GenerationInformation> _generationInformationDictionary; 
+
     private Transform[] _childrenTransforms;
 
     private GUIManager gui;
-
-
-    //public MySecondScript secondScriptqqqqqqwe;
-
-    // private static UnityEngine.Object _personPrefab;
 
     private void Awake()
     {
@@ -63,15 +53,15 @@ public class Myscript : MonoBehaviour
         gui = FindObjectOfType(typeof(GUIManager)) as GUIManager;
         gui.SendMessage("myInitZScale", ZScale);
 
-
-        myMatchMaker = new Matchmaker();
         myPeople = new MyPeople();
-        _personsBirthPlatformObjects = new GameObject[1000];
-        _personsWeddingPlatformObjects = new GameObject[1000];
+        _generationInformationDictionary = new Dictionary<int, GenerationInformation>();
 
-        _weddingDayDestinationObjects = new GameObject[1000];
+        _personsBirthPlatformObjects = new GameObject[1500];
+        _personsWeddingPlatformObjects = new GameObject[1500];
 
-        _birthDayDestinationObjects = new GameObject[1000];
+        _weddingDayDestinationObjects = new GameObject[1500];
+
+        _birthDayDestinationObjects = new GameObject[1500];
 
         // _personPrefab = Resources.Load("FirstPerson");
 
@@ -83,8 +73,6 @@ public class Myscript : MonoBehaviour
         Debug.Log("I just started!");
         //secondScript.SortMyList();
 
-
-
         // TODO turn this (below) into a LIST
         int[] counterPerGeneration = new int[25];
 
@@ -93,22 +81,22 @@ public class Myscript : MonoBehaviour
         for (int i = 0; i < 25; i++) counterPerGeneration[i] = 0;
         TreePerson.timeSpan[] personTimeSpans = new TreePerson.timeSpan[25];
 
-        #region MatchMaker
+        #region CheckArguments for Filename of Family History Information XML file
         string[] arguments = Environment.GetCommandLineArgs();
-        if (arguments.Count() > 1)
+        if (ThreeDFamilyTreeFileName == "" && arguments.Count() > 1)
         {
             ThreeDFamilyTreeFileName = arguments[1];
         }
         
         if (string.IsNullOrEmpty(ThreeDFamilyTreeFileName))
         {
-            Debug.Log("Using MatchMaker");
-            allMyFamilies = myMatchMaker.allFamilies;
-        }
-            #endregion
+            Debug.Log("No 3D Family File was provided!");
 
+            gui.dialogInformationMessage = "You have not provided a Family Inforamtion File.  There is nothing to play.";
+        }    //TODO should probably check to see if the file exists
+        #endregion
         else
-            #region 3DFamilyTreeFileUtility
+        #region READ From 3DFamilyTreeFileUtility File
 
         {
             Debug.Log("Using CourtHouse");
@@ -136,26 +124,30 @@ public class Myscript : MonoBehaviour
         // FamilyGenerationIndex = the relative generational index of this family within this generation
         // FamilyPersonIndex = the relative person index (bride, groom, then birth order) of this person within the family
         // As well as the bounding life span information for each family, to help build a HOUSE around them
-        float[] previousHouseEdge = new float[25]; // Keep track of the previous house edges for each generation
         foreach (Family familyHome in allMyFamilies)
         {
             // This is the Gereation # as read from the file
             int generation = familyHome.Generation;
             if (generation != 0)
             {
-
+                if (!_generationInformationDictionary.ContainsKey(generation))
+                    _generationInformationDictionary.Add(generation, new GenerationInformation());
+               
                 // Keep track of the # of Families that we have in this Generation
-                int familyGenerationIndex = counterPerGeneration[generation]++;
+                int familyGenerationIndex = _generationInformationDictionary[generation].IncrementGenerationCounter(); 
                 int peopleCount = familyHome.ChildrenPersonIndexList.Count + 2;
-
 
                 // build the families house
                 GameObject newHousePlatform =
                     (GameObject) Instantiate(MyHousePlatformObject, new Vector3(0.0f, 0.0f, 0.0f), transform.rotation);
+                
+                newHousePlatform.transform.parent = _generationInformationDictionary[generation].GenerationGameObject.transform;
+
+                // add this houseplatform to the new generationIndfromation Game Object
 
                 // if we are the first house build for this generation, set previous house edge to zero
-                if (familyGenerationIndex == 0) previousHouseEdge[generation] = 0.0f;
-                familyHome.PreviousHouseEdge = previousHouseEdge[generation];
+                // This works because new GenerationInformation initializes Previous House Edge to Zero
+                familyHome.PreviousHouseEdge = _generationInformationDictionary[generation].PreviousHouseEdge; 
 
                 familyHome.FamilyGenerationIndex = familyGenerationIndex;
                 string[] parts = myPeople.allPeople[familyHome.GroomPersonIndex].Name.Split(' ');
@@ -188,6 +180,10 @@ public class Myscript : MonoBehaviour
                         (GameObject)
                             Instantiate(MyPersonPlatformObject, new Vector3(0.0f, 0.0f, 0.0f), transform.rotation);
 
+                    // This parantage (used to) cause problems with obtaining the tree index in PersonPlatformTriggerScript Line 21 & 33
+                    // FIXED it by giving the Person Platform a tag and then I search for the parent with this tag in the TriggerMat
+                    newPersonPlatform.transform.parent = newHousePlatform.transform;
+
                     if (familyPersonIndex == 0) //Bride
                     {
                         tempPersonIndex = familyHome.BridePersonIndex;
@@ -197,7 +193,6 @@ public class Myscript : MonoBehaviour
                         _weddingDayDestinationObjects[tempPersonIndex] = tmpDestinationObject;
                         _personsWeddingPlatformObjects[tempPersonIndex] = newPersonPlatform;
 
-
                     }
                     else if (familyPersonIndex == 1) //Groom
                     {
@@ -206,7 +201,6 @@ public class Myscript : MonoBehaviour
                         platformType = PersonPlatformScript.PlatformType.Wedding;
                         _weddingDayDestinationObjects[tempPersonIndex] = tmpDestinationObject;
                         _personsWeddingPlatformObjects[tempPersonIndex] = newPersonPlatform;
-
 
                     }
                     else // Children
@@ -228,11 +222,9 @@ public class Myscript : MonoBehaviour
                         _birthDayDestinationObjects[tempPersonIndex] = tmpDestinationObject;
                         _personsBirthPlatformObjects[tempPersonIndex] = newPersonPlatform;
 
-
                     }
                     // Neither the Parentage nor the postion is set up for the Destination Object
                     // We will do this in the PersonPlatformScript Start routine.
-
 
                     myTreePerson = myPeople.allPeople[tempPersonIndex];
                     //myTreePerson.TransporterObject = myTransporterObject;
@@ -240,29 +232,30 @@ public class Myscript : MonoBehaviour
                     myTreePerson.FamilyPersonIndex = familyPersonIndex;
                     myTreePerson.Generation = generation;
                     myTreePerson.FamilyGenerationIndex = familyGenerationIndex;
-                    myTreePerson.PreviousHouseEdge = previousHouseEdge[generation];
+                    myTreePerson.PreviousHouseEdge = _generationInformationDictionary[generation].PreviousHouseEdge; 
                     newPersonPlatform.SendMessage("myInitScale", myScriptScale);
                     newPersonPlatform.SendMessage("myInit", myTreePerson);
                     newPersonPlatform.SendMessage("myInitType", platformType);
                     newPersonPlatform.SendMessage("myInitDestinationObject", tmpDestinationObject);
                     newPersonPlatform.SendMessage("myInitMarriageDate", personMarriageDate);
 
-
                 } // for each family person
 
                 _childrenTransforms = newHousePlatform.GetComponentsInChildren<Transform>();
                 //_transformPreviousHouse = _childrenTransforms[4];
-                previousHouseEdge[generation] = 0.0f;
                 foreach (Transform childTransform in _childrenTransforms)
                 {
                     if (childTransform.name.Contains("RightEdgeEnd"))
                     {
-                        previousHouseEdge[generation] = childTransform.transform.position.x;
+                        _generationInformationDictionary[generation].PreviousHouseEdge = childTransform.transform.position.x;
                     }
                 }
+                // now move it all
+               // _generationInformationDictionary[generation].GenerationGameObject.transform.position = new Vector3((generation-1) * 100.0f, 0.0f, 0.0f);
+
             }
         }
-
+        #region Transporters
         // Now Set up transporters
         foreach (Family familyHome in allMyFamilies)
         {
@@ -307,10 +300,6 @@ public class Myscript : MonoBehaviour
                         tmpPersonsPlatform = _personsBirthPlatformObjects[tempPersonIndex];
 
                     }
-                    if (tempPersonIndex == 2 || tempPersonIndex == 3)
-                    {
-                        Debug.Log(String.Format("PersonIndex # {0} Here", tempPersonIndex));
-                    }
 
                     if (tmpDestinationObject != null)
                     {
@@ -332,7 +321,7 @@ public class Myscript : MonoBehaviour
             } // skip gen 0
 
         } // foreach Family 
-
+        #endregion
     }
 
 
@@ -341,6 +330,8 @@ public class Myscript : MonoBehaviour
     {
 
         //Debug.Log ("Updating!!");
+        //_generationInformationDictionary[1].GenerationGameObject.transform.Rotate(Vector3.down * Time.deltaTime );
+
     }
 
     #region HELPERS

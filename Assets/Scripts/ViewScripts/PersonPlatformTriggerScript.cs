@@ -6,6 +6,7 @@ public class PersonPlatformTriggerScript : MonoBehaviour
 
     public int treePersonIndex;  // This is Who I am
     private GUIManager gui;
+    private PersonPlatformScript myPersonPlatformScript;
 
     //setup
     void Awake()
@@ -17,8 +18,12 @@ public class PersonPlatformTriggerScript : MonoBehaviour
     void Start ()
     {
         gui = FindObjectOfType(typeof(GUIManager)) as GUIManager;
-        var myroot = this.transform.root;   // This will get us the PersonPlatform
-        treePersonIndex = myroot.GetComponent<PersonPlatformScript>().treePersonIndex;
+        
+        //var myroot = this.transform.root;   // This will get us the PersonPlatform
+        myPersonPlatformScript = FindParentWithTag(this.gameObject, "PersonPlatform").GetComponent<PersonPlatformScript>();
+        // myroot.GetComponentsInChildren<PersonPlatformScript>();
+        //if (personPlatformScript.Length == 1)
+        treePersonIndex = myPersonPlatformScript.treePersonIndex;
     }
 
     private void OnTriggerEnter(Collider otherObject)
@@ -27,8 +32,8 @@ public class PersonPlatformTriggerScript : MonoBehaviour
         {
             if (gui)
             {
-                var myroot = this.transform.root;   // This will get us the PersonPlatform                
-                gui.PersonPortrait = myroot.GetComponent<PersonPlatformScript>().personPortrait;
+           
+                gui.PersonPortrait = myPersonPlatformScript.personPortrait;
                 gui.treePersonIndex = treePersonIndex;
                 gui.showPersonInformation = true;
             }
@@ -51,4 +56,18 @@ public class PersonPlatformTriggerScript : MonoBehaviour
     void Update () {
 	
 	}
+    private static GameObject FindParentWithTag(GameObject childObject, string tag)
+    {
+        Transform t = childObject.transform;
+        while (t.parent != null)
+        {
+            if (t.parent.tag == tag)
+            {
+                return t.parent.gameObject;
+            }
+            t = t.parent.transform;
+        }
+        return null; // Could not find a parent with given tag.
+    }
+
 }
